@@ -1,0 +1,25 @@
+{
+  "name": "flask_online_shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildcss": "npx tailwindcss -i ./app/static/input.css -o ./app/static/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuliusKaufhold/flask_online_shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JuliusKaufhold/flask_online_shop/issues"
+  },
+  "homepage": "https://github.com/JuliusKaufhold/flask_online_shop#readme",
+  "dependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
