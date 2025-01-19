@@ -4,10 +4,11 @@ import os
 def create_app():
     app=Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"]=os.getenv("DATABASE_URI")
+    app.config["SECRET_KEY"]=os.getenv("SECRET_KEY")
 
-
-    from app.routes import main
+    from app.routes import main,login_manager
     app.register_blueprint(main)
+    login_manager.init_app(app)
 
     from app.models import User,db
     db.init_app(app)

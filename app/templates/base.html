@@ -5,9 +5,18 @@
         <link rel="stylesheet" href="{{url_for("static", filename="output.css")}}?v=1.0">
         <title>flask-shop</title>
     </head>
-    <body>
-        <div class="bg-blue-600">
-            <p class="text-2xl">THIS IS A TEST</p>
+    <body class="bg-slate-900">
+        <div class="bg-slate-800 h-10 w-full flex items-center justify-end">
+            <a class="text-2xl text-white px-4" href="/login">Login</a>
+            <a class="text-2xl text-white px-4" href="/signup">Sign Up</a>
+            <a class="text-2xl text-white px-4" href="/logout">Log out</a>
+            {% if current_user.is_authenticated %}
+                <p class="text-2xl text-white px-4">{{ current_user.username }}</p>
+            {% endif %}
+        </div>
+        <div class="flex items-center justify-center h-screen">
+            {% block content %}
+            {% endblock %}
         </div>
     </body>
 </html>
