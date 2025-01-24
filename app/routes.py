@@ -1,4 +1,4 @@
-from flask import Flask,render_template,Blueprint, flash, redirect, url_for
+from flask import Flask,render_template,Blueprint, flash, redirect, url_for, request
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from app.forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,9 +17,6 @@ def home():
 
 @main.route("/login", methods=["POST","GET"])
 def login():
-    if current_user.is_authenticated:
-        print("already logged in")
-        return redirect(url_for("main.home"))
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -36,8 +33,6 @@ def login():
 
 @main.route("/signup", methods=["POST","GET"])
 def signup():
-    if current_user.is_authenticated:
-        return redirect(url_for("main.home"))
     form=RegisterForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username = form.username.data).first()
@@ -53,7 +48,9 @@ def signup():
     return render_template("signup.html",form=form)
 
 @main.route("/logout", methods=["POST","GET"])
-@login_required
 def logout():
-    logout_user()
+    try:
+        logout_user()
+    except LogoutException as e:
+        print(e)
     return redirect(url_for("main.login"))
