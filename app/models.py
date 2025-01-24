@@ -23,7 +23,7 @@ class Item(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(128))
     price: so.Mapped[float] = so.mapped_column(sa.Float(precision=2))
     description: so.Mapped[str] = so.mapped_column(sa.String(512))
-    image: so.Mapped[str] = so.mapped_column(sa.String(256))
+    image: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
 
     cart: so.Mapped[List["Cart"]] = so.relationship("Cart",back_populates="item")
 

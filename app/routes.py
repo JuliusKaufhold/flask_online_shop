@@ -2,25 +2,31 @@ from flask import Flask,render_template,Blueprint, flash, redirect, url_for, req
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from app.forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import User,db
+from app.models import User, Item, Cart, db
+import sqlalchemy as sa
 
 main = Blueprint("main",__name__)
 login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(id):
-    return User.query.get(id)
+    return db.session.get(User, id)
 
 @main.route("/")
+def base():
+    return redirect(url_for("main.home"))
+
+@main.route("/home")
 def home():
-    return render_template("base.html")
+    items = db.session.scalars(sa.select(Item)).all()
+    return render_template("home.html", items=items)
 
 @main.route("/login", methods=["POST","GET"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
-        user = User.query.filter_by(username=username).first()
+        user = db.session.scalars(sa.select(User).where(User.username == username)).first()
         if user == None:
             return redirect(url_for("main.login"))
         if check_password_hash(user.password, form.password.data):
@@ -35,7 +41,7 @@ def login():
 def signup():
     form=RegisterForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username = form.username.data).first()
+        user = db.session.scalars(sa.select(User).where(User.username == form.username.data)).first()
         if user:
             print("already exists")
             return redirect(url_for("main.login"))
