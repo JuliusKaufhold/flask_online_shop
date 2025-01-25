@@ -1,24 +1,32 @@
 <!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="{{url_for("static", filename="output.css")}}?v=1.0">
-        <title>flask-shop</title>
-    </head>
-    <body class="bg-slate-900">
-        <div class="bg-slate-800 h-10 w-full flex items-center justify-end">
-            <a class="text-2xl text-white px-4" href="/">Home</a>
+<html class="h-full overflow-auto">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}?v=1.0">
+    <title>flask-shop</title>
+</head>
+<body class="m-0 p-0 bg-black">
+
+    <nav class="h-16 w-full flex items-center justify-between bg-black text-white px-8 shadow-lg fixed top-0 left-0 right-0 z-20">
+        <a href="/">
+            <img src="{{ url_for('static', filename='ringracer.png') }}" alt="ringracer logo" class="w-36 h-14"/>
+        </a>
+        <div class="flex items-center space-x-8 ml-auto">
             {% if current_user.is_authenticated %}
-                <a class="text-2xl text-white px-4" href="/logout">Log out</a>
-                <p class="text-2xl text-white px-4">{{ current_user.username }}</p>
+                <a class="text-2xl font-semibold tracking-wide hover:text-gray-400 transition-colors duration-200" href="/logout">Log out</a>
+                <p class="text-2xl font-semibold tracking-wide text-gray-300">{{ current_user.username }}</p>
             {% else %}
-                <a class="text-2xl text-white px-4" href="/login">Login</a>
-                <a class="text-2xl text-white px-4" href="/signup">Sign Up</a>
+                <a class="text-2xl font-semibold tracking-wide hover:text-gray-400 transition-colors duration-200" href="/login">Login</a>
+                <a class="text-2xl font-semibold tracking-wide hover:text-gray-400 transition-colors duration-200" href="/signup">Sign Up</a>
             {% endif %}
         </div>
-        <div class="flex items-center justify-center h-screen">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </body>
+    </nav>
+
+    <div class="flex flex-col min-h-screen">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
 </html>
+

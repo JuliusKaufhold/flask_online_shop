@@ -60,3 +60,10 @@ def logout():
     except LogoutException as e:
         print(e)
     return redirect(url_for("main.login"))
+
+@main.route("/cart", methods=["POST","GET"])
+def cart():
+
+
+
+    return redirect(url_for("main.home"))
