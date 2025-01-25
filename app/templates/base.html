@@ -9,7 +9,7 @@
 
     <nav class="h-16 w-full flex items-center justify-between bg-black text-white px-8 shadow-lg fixed top-0 left-0 right-0 z-20">
         <a href="/">
-            <img src="{{ url_for('static', filename='ringracer.png') }}" alt="ringracer logo" class="w-36 h-14"/>
+            <img src="{{ url_for('static', filename='images/ringracer.png') }}" alt="ringracer logo" class="w-36 h-14"/>
         </a>
         <div class="flex items-center space-x-8 ml-auto">
             {% if current_user.is_authenticated %}
